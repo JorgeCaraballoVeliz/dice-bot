@@ -1,4 +1,9 @@
-import { SlashCommandBuilder } from 'discord.js';
+import { SlashCommandBuilder, AttachmentBuilder } from 'discord.js';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 //explore the button bulder from discord.js
 //get argument for number of dice
 
@@ -11,7 +16,11 @@ export const data = new SlashCommandBuilder()
 export async function execute(interaction) {
     let roll = Math.floor(Math.random() * (6 - 1 + 1) + 1);
     //console.log(roll);
-    await interaction.reply(roll.toString());
-}
 
-///////////////2d6//////////////
+    const diceImage1 = path.join(__dirname, `../images/${roll}-d6.png`);
+
+    const attachment1 = new AttachmentBuilder(diceImage1, { name: 'dice1.png' });
+    
+
+    await interaction.reply({files: [attachment1]});
+}
